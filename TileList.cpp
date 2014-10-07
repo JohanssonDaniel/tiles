@@ -43,16 +43,21 @@ int TileList::indexOfTopTile(int x, int y)
 
 void TileList::raise(int x, int y)
 {
-    for (int i = 0; i < m_size; i++){
+    for (int i = 0; i < m_size; ++i){
         if(m_elements[i].contains(x, y)){
             addTile(m_elements[i]);
+            break;
         }
     }
 }
 
 void TileList::lower(int x, int y)
 {
-    // TODO: write this member
+    for(int i = m_size-1; i > 0; --i){
+        if(m_elements[i].contains(x, y)){
+            addTile(m_elements[i]);
+        }
+    }
 }
 
 void TileList::remove(int x, int y)
