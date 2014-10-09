@@ -33,7 +33,8 @@ void TileList::drawAll(QGraphicsScene* scene)
 
 int TileList::indexOfTopTile(int x, int y)
 {
-    for(int i = m_size-1; i > 0; --i){
+    int i = m_size-1;
+    for(i ; i >= 0; --i){
         if(m_elements[i].contains(x, y)){
             return i;
         }
@@ -41,33 +42,58 @@ int TileList::indexOfTopTile(int x, int y)
     return -1;
 }
 
-void TileList::raise(int x, int y)
-{
-    for (int i = 0; i < m_size; ++i){
-        if(m_elements[i].contains(x, y)){
-            addTile(m_elements[i]);
-            break;
+void TileList::raise(int x, int y){
+    int indexTop = indexOfTopTile(x, y);
+    Tile tempTopTile = m_elements[indexTop];
+    if(indexTop != -1){
+        for (int i = indexTop; i < m_size; ++i){
+            if(i < (m_size-1)){
+                m_elements[i] = m_elements[i+1];
+            }
+            else{
+                m_elements[i] = tempTopTile;
+            }
         }
     }
 }
 
 void TileList::lower(int x, int y)
 {
-    for(int i = m_size-1; i > 0; --i){
-        if(m_elements[i].contains(x, y)){
-            addTile(m_elements[i]);
+    int indexTop = indexOfTopTile(x, y);
+    Tile tempTopTile = m_elements[indexTop];
+    if(indexTop != -1){
+        for(int i = indexTop; i >= 0; --i){
+            if(i != 0){
+            m_elements[i] = m_elements[i-1];         //Shift elements right to make room at the top
+            }
+            else{
+                m_elements[i] = tempTopTile;
+            }
         }
     }
 }
 
 void TileList::remove(int x, int y)
 {
-    // TODO: write this member
+    int topTile = indexOfTopTile(x, y);
+    if(topTile != -1){
+        for (int i = topTile; i < m_size; i++){
+                m_elements[i] = m_elements[i+1];
+            }
+         m_size--;
+        }
 }
 
 void TileList::removeAll(int x, int y)
 {
-    // TODO: write this member
+    for(int i = 0; i < m_size; ++i){
+        int indexTop = indexOfTopTile(x, y);
+        if(indexTop != -1){
+            for(int j = indexTop; j < m_size; ++j){
+                m_elements[j] = m_elements[1+j];
+            }
+        }
+    }
 }
 
 
