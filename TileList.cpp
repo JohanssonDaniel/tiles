@@ -8,7 +8,7 @@
 
 TileList::TileList()
 {
-    // TODO: write this member
+
 }
 
 TileList::~TileList()
@@ -24,17 +24,16 @@ void TileList::addTile(Tile tile)
 
 }
 
-void TileList::drawAll(QGraphicsScene* scene)
+void TileList::drawAll(QGraphicsScene* scene) const
 {
     for(int i = 0; i < m_size; i++){
         m_elements[i].draw(scene);
     }
 }
 
-int TileList::indexOfTopTile(int x, int y)
+int TileList::indexOfTopTile(int x, int y) const
 {
-    int i = m_size-1;
-    for(i ; i >= 0; --i){
+    for(int i = (m_size-1); i >= 0; --i){
         if(m_elements[i].contains(x, y)){
             return i;
         }
